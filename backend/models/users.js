@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: false
     },
+    imagePath: {
+      type: DataTypes.STRING,
+      required: false
+    },
     is_deleted: {
       type: DataTypes.BOOLEAN,
       default: false

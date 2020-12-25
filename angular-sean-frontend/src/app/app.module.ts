@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+
 import { AppComponent } from './app.component';
 import { UserLoginComponent } from './components/auth/user-login/user-login.component';
 import { UserSignupComponent } from './components/auth/user-signup/user-signup.component';
@@ -44,7 +47,15 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     ReactiveFormsModule
 
   ],
-  providers: [],
+  providers: [/* {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  } *//* , {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ErrorInterceptor,
+    multi: true
+  } */],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

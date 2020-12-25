@@ -1,0 +1,24 @@
+:host {
+  display: block;
+   margin-top: 1rem;
+}
+.user-image {
+  width: 100%;
+  height: auto
+}
+.user-image img {
+  width: 25%;
+  height: auto;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+mat-spinner {
+  margin: auto;
+}
+mat-expansion-panel {
+  margin: auto;
+  color: black;
+  background-color: rgb(114, 114, 117);
+  flex-direction: column;
+  width: 75%;
+}

@@ -165,6 +165,11 @@
                     "field": "user_mobile",
                     "seqType": "Sequelize.STRING"
                 },
+                "imagePath": {
+                    "required": false,
+                    "field": "imagePath",
+                    "seqType": "Sequelize.STRING"
+                },
                 "is_deleted": {
                     "default": false,
                     "field": "is_deleted",
@@ -184,5 +189,5 @@
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 1
 }

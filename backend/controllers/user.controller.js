@@ -16,6 +16,25 @@ exports.get_profile =  function(req, res, next) {
        res.status(500).json(error);
      }
    }
+//Get a user for the  update user form
+exports.get_user = function(req, res, next) {
+     let token = req.headers['key'];
+     if (token) {
+       credentialService.confirmIdentity(token).then((user) => {
+         if (user) {
+           models.users.findByPk(parseInt(req.params.id)).then(user => {
+             res.status(200).json(user);
+           });
+         } else {
+           res.status(400).json({
+                message: 'You are not authorized.'
+           });
+         }
+       });
+     } else {
+       res.status(500).json(error);
+     }
+   }
 //Get all of the users in the database. 
 exports.get_users = async function (req, res, next) {
      try {
@@ -28,6 +47,7 @@ exports.get_users = async function (req, res, next) {
                                    where: { is_deleted: false }
                               }).then((users, error) => {
                                    if (users) {
+                                        //console.log(users);
                                         res.status(200).json({
                                              message: "Users have been fetched!",
                                              users
@@ -56,11 +76,13 @@ exports.update_user = async function (req, res, next) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
+                              const url = req.protocol + '://' + req.get('host');
+                              imagePath = url + '/images/' + req.file.filename;
                               models.users.update({
+                                   imagePath: imagePath,
                                    first_name: req.body.first_name,
                                    last_name: req.body.last_name,
                                    user_name: req.body.user_name,
-                                   user_password: req.body.user_password,
                                    user_address: req.body.user_address,
                                    user_city: req.body.user_city,
                                    user_state: req.body.user_state,
@@ -74,7 +96,6 @@ exports.update_user = async function (req, res, next) {
                               }
                               ).then(models.auth.update({
                                    user_email: req.body.user_email,
-                                   user_password: credentialService.lockPassword(req.body.user_password)
                               }, {
                                    where: { user_email: req.body.user_email }
                               })).then(function (result, error) {

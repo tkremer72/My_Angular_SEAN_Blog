@@ -1,0 +1,36 @@
+:host {
+  display: block;
+   margin: 1rem auto;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}
+img {
+  width: 25%;
+  height: auto;
+  border: 3px inset darkslateblue;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+mat-card {
+  display: flex;
+  color: black;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+.card-content {
+  display: flex;
+  text-align: center;
+}
+p {
+  font-size: 19px;
+}
+.user-image {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20px 0;
+  text-align: center;
+}

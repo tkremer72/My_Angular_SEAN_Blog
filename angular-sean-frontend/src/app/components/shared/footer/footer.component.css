@@ -1,13 +1,12 @@
 footer {
-  color: darkslategrey;
   font-family: Roboto;
 }
 
 a {
+  color: black;
   margin: auto;
   padding: 0 0 0 0;
   text-decoration: none;
-  color: darkslategrey;
 }
 img {
   margin: auto;

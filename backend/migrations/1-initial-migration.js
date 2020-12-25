@@ -5,20 +5,67 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
+ * createTable "auths", deps: []
  * createTable "users", deps: []
- * createTable "auths", deps: [users]
  * createTable "blogs", deps: [users]
  *
  **/
 
 var info = {
     "revision": 1,
-    "name": "migrate",
-    "created": "2020-12-22T04:09:14.530Z",
+    "name": "initial-migration",
+    "created": "2020-12-25T05:00:18.531Z",
     "comment": ""
 };
 
 var migrationCommands = [{
+        fn: "createTable",
+        params: [
+            "auths",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "user_email": {
+                    "type": Sequelize.STRING,
+                    "field": "user_email",
+                    "unique": true,
+                    "required": true
+                },
+                "user_password": {
+                    "type": Sequelize.STRING,
+                    "field": "user_password",
+                    "required": true
+                },
+                "is_admin": {
+                    "type": Sequelize.BOOLEAN,
+                    "field": "is_admin",
+                    "default": false
+                },
+                "is_deleted": {
+                    "type": Sequelize.BOOLEAN,
+                    "field": "is_deleted",
+                    "default": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
         fn: "createTable",
         params: [
             "users",
@@ -81,52 +128,10 @@ var migrationCommands = [{
                     "field": "user_mobile",
                     "required": false
                 },
-                "is_deleted": {
-                    "type": Sequelize.BOOLEAN,
-                    "field": "is_deleted",
-                    "default": false
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "auths",
-            {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
-                },
-                "user_email": {
+                "imagePath": {
                     "type": Sequelize.STRING,
-                    "field": "user_email",
-                    "unique": true,
-                    "required": true
-                },
-                "user_password": {
-                    "type": Sequelize.STRING,
-                    "field": "user_password",
-                    "required": true
-                },
-                "is_admin": {
-                    "type": Sequelize.BOOLEAN,
-                    "field": "is_admin",
-                    "default": false
+                    "field": "imagePath",
+                    "required": false
                 },
                 "is_deleted": {
                     "type": Sequelize.BOOLEAN,
@@ -142,17 +147,6 @@ var migrationCommands = [{
                     "type": Sequelize.DATE,
                     "field": "updatedAt",
                     "allowNull": false
-                },
-                "user_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "user_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "users",
-                        "key": "id"
-                    },
-                    "allowNull": true
                 }
             },
             {}

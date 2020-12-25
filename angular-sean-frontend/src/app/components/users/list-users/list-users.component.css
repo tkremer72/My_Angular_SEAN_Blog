@@ -1,0 +1,32 @@
+:host {
+  display: block;
+   margin-top: 1rem;
+}
+.user-image {
+  width: 100%;
+  height: auto
+}
+.user-image img {
+  width: 25%;
+  height: auto;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+.info-text {
+  text-align: center;
+}
+/* mat-paginator {
+  margin-top: 1rem;
+} */
+mat-spinner {
+  margin: auto;
+}
+mat-accordion {
+  margin: auto;
+  display: flex;
+  color: black;
+  background-color: rgb(114, 114, 117);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}

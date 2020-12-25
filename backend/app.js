@@ -3,6 +3,7 @@ var cors = require('cors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 var models = require('./models'); //Bring the models into the application
 
@@ -14,6 +15,17 @@ var userRouter = require('./routes/user.routes');
 var blogsRouter = require('./routes/blog.routes');
 
 const app = express()
+
+.use(logger('dev'))//Use the logger during development
+.use(express.json())
+.use(express.urlencoded({ extended: false }))
+.use(cookieParser())//Parse the requests as json
+.use(bodyParser.json())
+.use(bodyParser.urlencoded({ extended: false }))
+//line below allows the frontend to access images.
+.use('/images', express.static(path.join(__dirname, 'images')))
+//will need to create the backend directory to grant acess for now it is set to public
+.use('/', express.static(path.join(__dirname, 'angular-sean-frontend')))
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', "*");
@@ -28,13 +40,6 @@ app.use((req, res, next) => {
  next();
 })
 .use(cors()) //Bring in the Cross Origin Resources Service
-.use(logger('dev'))//Use the logger during development
-.use(express.json())
-.use(express.urlencoded({ extended: false }))
-.use(cookieParser())//Parse the requests as json
-
-//will need to create the backend directory to grant acess for now it is set to public
-.use('/', express.static(path.join(__dirname, 'angular-sean-frontend')))
 
 //.use('/', indexRouter)
 .use('/admins', adminRouter)
@@ -47,19 +52,19 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular-sean-frontend", "index.html"))
 })
 
-// .use(function(req, res, next) {
-//   next(createError(404))
-// })
+.use(function(req, res, next) {
+  next(createError(404))
+})
 
-// //Error handler
-// .use(function(error, req, res, next) {
-// //Set locals, only providing error in development
-//   res.locals.message = error.message;
-//   res.locals.error = req.app.get('env') === 'development' ? error: {};
-// //Render the error page
-// res.status(error.status || 500)
-// res.render('error')
-// })
+//Error handler
+.use(function(error, req, res, next) {
+//Set locals, only providing error in development
+  res.locals.message = error.message;
+  res.locals.error = req.app.get('env') === 'development' ? error: {};
+//Render the error page
+res.status(error.status || 500)
+res.render('error')
+})
 
 //Set the environment port number
 const port = process.env.PORT || 4000;

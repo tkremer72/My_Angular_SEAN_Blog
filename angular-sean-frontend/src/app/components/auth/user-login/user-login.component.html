@@ -1,1 +1,43 @@
-<p>user-login works!</p>
+<mat-card class="container">
+  <!-- Show the spinner if isLoading is true -->
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+
+    <mat-form-field color="accent">
+      <input
+      matInput
+      type="email"
+      name="user_email"
+      ngModel
+      required
+      email
+      placeholder="E-Mail Address"
+      #emailInput="ngModel"
+      autocomplete="on">
+
+      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+
+      <input
+      matInput type="password"
+      name="user_password"
+      ngModel
+      placeholder="Password"
+      #passwordInput="ngModel"
+      required
+      autocomplete="on">
+
+      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
+
+    </mat-form-field>
+
+    <button color="black" mat-raised-button type="submit" *ngIf="!isLoading">
+      Login
+    </button>
+  </form>
+
+</mat-card>

@@ -1,8 +1,14 @@
 var models = require('../models');
+const { validationResult } = require('express-validator');
 var credentialService = require('../services/authorize');
 
 //Create a new user if one does not exist
 exports.user_signup = async function (req, res, next) {
+     const errors = validationResult(req);
+     if(!errors.isEmpty()) {
+          // return res.status(400).json({ errors: errors.message })
+          next(new HttpError('Invalid inputs passed, please check your data!', 422))
+     }
      try {
           await models.users.findOrCreate({
                where: { user_email: req.body.user_email },
