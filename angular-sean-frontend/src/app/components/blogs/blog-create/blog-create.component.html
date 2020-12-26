@@ -17,13 +17,14 @@
     </mat-form-field>
 
     <mat-form-field color="accent">
-      <input
+      <textarea
       color="accent"
       matInput
       type="text"
+      rows="20"
       formControlName="description"
       placeholder="Description"
-      >
+      ></textarea>
 
       <mat-error *ngIf="form.get('description').invalid">Please enter a blog description.</mat-error>
 

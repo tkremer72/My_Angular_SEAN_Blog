@@ -15,7 +15,7 @@
       </a>
     </li>
     <li>
-      <a *ngIf="userIsAuthenticated && userIsAdmin" mat-button routerLink="/admin-users-list" routerLinkActive="mat-accent">
+      <a *ngIf="userIsAuthenticated && isAdmin" mat-button routerLink="/admin-users-list" routerLinkActive="mat-accent">
         List Users
       </a>
     </li>

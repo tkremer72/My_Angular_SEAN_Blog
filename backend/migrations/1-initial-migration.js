@@ -14,7 +14,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "initial-migration",
-    "created": "2020-12-26T05:21:28.248Z",
+    "created": "2020-12-26T19:11:45.297Z",
     "comment": ""
 };
 
@@ -170,7 +170,7 @@ var migrationCommands = [{
                     "required": true
                 },
                 "description": {
-                    "type": Sequelize.STRING,
+                    "type": Sequelize.TEXT,
                     "field": "description",
                     "required": true
                 },

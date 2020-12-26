@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
+import { subscribeOn } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,6 +15,8 @@ import { User } from '../../../shared/models/user.model';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
 
+  public blogsPerPage = 2;
+  public currentPage = 0;
   public isLoading = false;
   public isAuthenticated = false;
   public isAdmin = false;
@@ -36,7 +39,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.getProfile();
-    this.getBlogs();
+    //this.getUserBlogs();
     this.isAdmin = this.authService.getIsAdmin();
     this.adminStatusSubs = this.authService.getAdminStatusListener()
     .subscribe(isAdmin => {
@@ -56,9 +59,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       //console.log(user);
     });
   }
-  getBlogs() {
-
-  }
+  /* getUserBlogs() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.blogService.getUsersBlogs(this.id).subscribe((blogs: any) => {
+      this.blogs = blogs;
+      console.log(blogs)
+    });
+  } */
 ngOnDestroy() {
   this.authStatusSubs.unsubscribe();
   this.adminStatusSubs.unsubscribe();

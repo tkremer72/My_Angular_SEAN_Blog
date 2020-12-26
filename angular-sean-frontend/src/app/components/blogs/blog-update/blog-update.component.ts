@@ -9,7 +9,7 @@ export class BlogUpdateComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

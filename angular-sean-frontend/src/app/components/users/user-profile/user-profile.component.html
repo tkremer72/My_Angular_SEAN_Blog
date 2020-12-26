@@ -16,6 +16,8 @@
         Phone: {{user.user_phone}} </p>
     </div>
     <a class="col s12 m4 l4" routerLink="/users-update/{{user.id}}">UPDATE</a>
-
+<div *ngFor="let blog of blogs">
+  {{blog.title}}
+</div>
   </mat-card>
 </div>

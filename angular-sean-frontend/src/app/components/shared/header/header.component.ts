@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  public isAdmin = false;
   public userIsAdmin = false;
   public userIsAuthenticated = false;
 
@@ -25,8 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userIsAdmin = this.authService.getIsAdmin();
     this.adminListenerSubs = this.authService.getAdminStatusListener()
-    .subscribe(isAdmin => {
-      this.userIsAdmin = isAdmin;
+    .subscribe(userIsAdmin => {
+      this.isAdmin = userIsAdmin;
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()

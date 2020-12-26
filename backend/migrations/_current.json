@@ -62,7 +62,7 @@
                 "description": {
                     "required": true,
                     "field": "description",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.TEXT"
                 },
                 "date": {
                     "required": true,

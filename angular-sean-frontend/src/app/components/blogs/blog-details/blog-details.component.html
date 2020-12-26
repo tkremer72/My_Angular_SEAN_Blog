@@ -1,1 +1,6 @@
-<p>blog-details works!</p>
+<mat-card *ngIf="blog">
+  <h1>{{blog.title}}</h1>
+  <h2>{{blog.description}}</h2>
+  <h4>Created:&nbsp;{{blog.date | date}}</h4>
+  <h4>Written By:&nbsp;{{blog.author}}</h4>
+</mat-card>
