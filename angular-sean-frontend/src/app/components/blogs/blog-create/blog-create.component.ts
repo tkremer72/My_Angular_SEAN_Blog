@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Blog } from '../../../shared/models/blog.model';
 import { BlogService } from '../../../shared/services/blog.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,7 +20,7 @@ export class BlogCreateComponent implements OnInit, OnDestroy {
    enteredAuthor = '';
    isLoading = false;
    form: FormGroup;
-   
+
   private mode = 'create';
   private blogId: string;
 
@@ -33,52 +33,53 @@ export class BlogCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.authStatusSubs = this.authService.getAuthStatusListener()
+    this.authStatusSubs = this.authService.getAdminStatusListener()
     .subscribe(authStatus => {
       this.isLoading = false;
     });
     this.form = new FormGroup({
-        'title': new FormControl(null, {
-          validators: [Validators.required, Validators.minLength(4)]
-        }),
-        'description': new FormControl(null, {
-          validators: [Validators.required]
-        }),
-        'date': new FormControl(null, {
-          validators: [Validators.required]
-        }),
-        'author': new FormControl(null, {
-          validators: [Validators.required, Validators.minLength(6)]
-        })
+      'title': new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)]
+      }),
+      'description': new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      'date': new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      'author': new FormControl(null, {
+        validators: [Validators.required]
+      })
     });
-     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-       if(paramMap.has('blogId')) {
-         this.mode = 'edit';
-         this.blogId = paramMap.get('blogId');
-         this.isLoading = true;
-         this.blogService.getBlog(this.blogId).subscribe(blogData => {
-           console.log(blogData);
-           this.isLoading = false;
-           this.blog = {
-             id: blogData.id,
-             title: blogData.title,
-             description: blogData.description,
-             date: blogData.date,
-             author: blogData.author
-           };
-           this.form.setValue({
-             'title': this.blog.title,
-             'description': this.blog.description,
-             'date': this.blog.date,
-             'author': this.blog.date
-           })
-         });
-       } else {
-         this.mode = 'create';
-         this.blogId = null;
-       }
-     })
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if(paramMap.has('blogId')) {
+        this.mode = 'edit';
+        this.blogId = paramMap.get('blogId');
+        this.isLoading = true;
+        this.blogService.getBlog(this.blogId).subscribe(blogData => {
+          this.isLoading = false;
+          this.blog = {
+            id: blogData.id,
+            title: blogData.title,
+            description: blogData.description,
+            date: blogData.date,
+            author: blogData.author
+          };
+          this.form.setValue({
+            'title': this.blog.title,
+            'description': this.blog.description,
+            'date': this.blog.date,
+            'author': this.blog.author
+          })
+        });
+      } else {
+        this.mode = 'create';
+        this.blogId = null;
+      }
+    })
   }
+
+
   onSaveBlog() {
     if(this.form.invalid) {
       return;

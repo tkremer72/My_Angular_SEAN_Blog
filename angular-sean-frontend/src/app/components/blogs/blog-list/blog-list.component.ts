@@ -12,15 +12,15 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class BlogListComponent implements OnInit, OnDestroy {
 
-  public blogs: Blog[] = [];
-  public isLoading = false;
-  public totalBlogs = 0;
-  public blogsPerPage = 2;
-  public pageSizeOptions = [1, 2, 5, 10];
-  public currentPage = 1;
+   blogs: Blog[] = [];
+   isLoading = false;
+   totalBlogs = 0;
+   blogsPerPage = 2;
+   pageSizeOptions = [1, 2, 5, 10];
+   currentPage = 1;
 
-  public userIsAuthenticated = false;
-  public userId: string;
+   userIsAuthenticated = false;
+   userId: string;
 
   private blogSubs: Subscription;
   private authStatusSubs: Subscription;

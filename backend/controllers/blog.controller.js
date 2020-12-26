@@ -75,29 +75,29 @@ exports.get_all_blogs = async function (req, res, next) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {  
-                              const pageSize = + req.query.pagesize;
+                              let fetchedBlogs;
+                             /*  const pageSize = +req.query.pagesize;
                               const currentPage = +req.query.page;
                               const paginate = (query, { currentPage, pageSize }) => {
-                                   const offset = pageSize * (currentPage - 1);
+                                   const offset = (pageSize * (currentPage - 1));
                                    const limit = pageSize;
                                    return {
                                         ...query,
                                         offset,
                                         limit
                                    }
-                              }
-                              let fetchedBlogs;
+                              } */
                               models.blogs.findAll(
-                                   paginate(
+                                   /* paginate(
                                         {
                                              where: { is_deleted: false },
                                         },
                                         { currentPage, pageSize }
-                                   )
+                                   ) */
                               ) .then(documents => {
                               fetchedBlogs = documents;
-                              //console.log(documents);
-                              return models.users.findAndCountAll();
+/*                               console.log(documents);
+ */                              //models.users.countDocuments();
                          }).then(count => {
                               res.status(200).json({
                                    message: "Blogs fetched successfully.",
@@ -132,13 +132,10 @@ exports.get_users_blogs = async function (req, res, next) {
                          let user_id = parseInt(req.params.id);
                          if (user) {
                               models.blogs.findAll({
-                                   where: { user_id: user.id, is_deleted: false }
+                                   where: { id: user_id, is_deleted: false }
                               }).then(blogs => {
                                    if (blogs) {
-                                        res.status(200).json({
-                                             message: 'We found all of your blogs.',
-                                             blogs
-                                        })
+                                        res.status(200).json(blogs)
                                    } else {
                                         return res.status(404).json({
                                              message: 'We could not find any blogs by you, please create one.'
