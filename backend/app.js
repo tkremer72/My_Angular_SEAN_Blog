@@ -21,7 +21,7 @@ const app = express()
 .use(express.urlencoded({ extended: false }))
 .use(cookieParser())//Parse the requests as json
 .use(bodyParser.json())
-.use(bodyParser.urlencoded({ extended: false }))
+.use(bodyParser.urlencoded({ extended: true }))
 //line below allows the frontend to access images.
 .use('/images', express.static(path.join(__dirname, 'images')))
 //will need to create the backend directory to grant acess for now it is set to public

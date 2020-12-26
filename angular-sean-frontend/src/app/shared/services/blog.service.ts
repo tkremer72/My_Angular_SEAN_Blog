@@ -26,12 +26,12 @@ export class BlogService {
   }
 
   getBlogs(blogsPerPage: number, currentPage: number) {
-    let token = localStorage.getItem('token');
-    let header = new HttpHeaders().set('key', token);
+    /* let token = localStorage.getItem('token');
+    let header = new HttpHeaders().set('key', token); */
     const queryParams = `?pagesize=${blogsPerPage}&page=${currentPage}`;
     this.http.get<{ message: string, blogs: any, maxBlogs: number}>(
-      BACKEND + 'all/blogs/' + queryParams,
-      { headers: header }
+      BACKEND + 'all/blogs/' + queryParams/* ,
+      { headers: header } */
     ).pipe(map((blogData) => {
       return {
         blogs: blogData.blogs.map((blog: {
@@ -76,27 +76,16 @@ export class BlogService {
     }>(BACKEND + id)
   }
 
-  addBlog(title: string, description: string, author: string, date: string) {
-
-    const blogData = new FormData();
-    blogData.append('title', title);
-    blogData.append('description', description);
-    blogData.append('date', date);
-    blogData.append('author', author);
-    this.http.post<{
-      message: string,
-      blog: Blog
-    }>(
-      BACKEND,
-      blogData
-    ).subscribe((resData) => {
-      this.router.navigate(['/']);
-    })
+  addBlog(title: string, description: string, date: string, author: string) {
+  
   }
+updateBlog(id: string, title: string, description: string, date: string, author: string) {
 
+
+}
   deleteBlog(blogId: string) {
-    let token = localStorage.getItem('token');
-    let header = new HttpHeaders().set('key', token);
-    return this.http.delete(BACKEND + blogId, { headers: header });
+    /* let token = localStorage.getItem('token');
+    let header = new HttpHeaders().set('key', token); */
+    return this.http.delete(BACKEND + blogId/* , { headers: header } */);
   }
 }

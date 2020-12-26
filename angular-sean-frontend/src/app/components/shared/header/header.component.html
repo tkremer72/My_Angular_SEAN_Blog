@@ -10,7 +10,12 @@
       </a>
     </li>
     <li>
-      <a *ngIf="userIsAuthenticated" mat-button routerLink="/users-list" routerLinkActive="mat-accent">
+      <a *ngIf="userIsAuthenticated" mat-button routerLink="/users-blogs-list" routerLinkActive="mat-accent">
+        All Blogs
+      </a>
+    </li>
+    <li>
+      <a *ngIf="userIsAuthenticated && userIsAdmin" mat-button routerLink="/admin-users-list" routerLinkActive="mat-accent">
         List Users
       </a>
     </li>

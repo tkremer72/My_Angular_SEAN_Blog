@@ -25,13 +25,13 @@ export class UserService {
     return this.usersUpdated.asObservable();
   }
   getProfile(userId: number) {
-    let token = localStorage.getItem('token');
-    let header = new HttpHeaders().set('key', token);
-    return this.http.get(BACKEND + 'profile', { headers: header })
+    /* let token = localStorage.getItem('token');
+    let header = new HttpHeaders().set('key', token); */
+    return this.http.get(BACKEND + 'profile'/* , { headers: header } */)
   }
 getUser(id: string) {
-  let token = localStorage.getItem('token');
-  let header = new HttpHeaders().set('key', token)
+  /* let token = localStorage.getItem('token');
+  let header = new HttpHeaders().set('key', token) ;*/
   return this.http.get<{
     id: string,
     first_name: string,
@@ -45,9 +45,10 @@ getUser(id: string) {
     user_phone: string,
     user_mobile: string,
     imagePath: string
-  }>(BACKEND + id, {headers: header})
+  }>(BACKEND + id/* , {headers: header} */)
 }
-  updateUser(
+
+updateUser(
     id: string,
     first_name: string,
     last_name: string,
@@ -61,9 +62,8 @@ getUser(id: string) {
     user_mobile: string,
     image: File
   ) {
-    let token = localStorage.getItem('token');
-    let header = new HttpHeaders().set('key', token);
-
+   /*  let token = localStorage.getItem('token');
+    let header = new HttpHeaders().set('key', token); */
     let userData: User | FormData;
     if(typeof(image) === 'object') {
       userData = new FormData();
@@ -95,17 +95,17 @@ getUser(id: string) {
         imagePath: image
       }
     }
-    this.http.put(BACKEND + id, userData, {headers: header})
+    this.http.put(BACKEND + id, userData/* , {headers: header} */)
     .subscribe(responseData => {
       this.router.navigate(['/users-profile']);
     })
   }
 
 getUsers() {
-  let token = localStorage.getItem('token');
-  let header = new HttpHeaders().set('key', token);
+  /* let token = localStorage.getItem('token');
+  let header = new HttpHeaders().set('key', token); */
   return this.http.get<{ message: string, users: any, maxUsers: number}>(
-    BACKEND, { headers: header }).pipe(map((userData) => {
+    BACKEND/* , { headers: header } */).pipe(map((userData) => {
       return {
         users: userData.users.map((user: {
           first_name: string;
@@ -144,8 +144,8 @@ getUsers() {
     })
 }
 deleteUser(userId: string) {
-  let token = localStorage.getItem('token');
-  let header = new HttpHeaders().set('key', token);
-  return this.http.delete(BACKEND + userId, { headers: header})
+  /* let token = localStorage.getItem('token');
+  let header = new HttpHeaders().set('key', token); */
+  return this.http.delete(BACKEND + userId/* , { headers: header} */)
 }
 }

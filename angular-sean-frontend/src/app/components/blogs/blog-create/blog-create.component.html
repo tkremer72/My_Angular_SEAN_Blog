@@ -1,1 +1,58 @@
-<p>blog-create works!</p>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form [formGroup]="form" (submit)="onSaveBlog()" *ngIf='!isLoading'>
+
+    <mat-form-field color="accent">
+      <input
+      color="accent"
+      matInput
+      type="text"
+      formControlName="title"
+      placeholder="Title"
+      >
+
+      <mat-error *ngIf="form.get('title').invalid">Please enter a blog title.</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <input
+      color="accent"
+      matInput
+      type="text"
+      formControlName="description"
+      placeholder="Description"
+      >
+
+      <mat-error *ngIf="form.get('description').invalid">Please enter a blog description.</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <input
+      color="accent"
+      matInput
+      type="text"
+      formControlName="date"
+      placeholder="Date"
+      >
+      <mat-error *ngIf="form.get('date').invalid">Please enter a blog date.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <input
+      color="accent"
+      matInput
+      type="text"
+      formControlName="author"
+      placeholder="Author"
+      >
+      <mat-error *ngIf="form.get('author').invalid">Please enter a blog author.</mat-error>
+    </mat-form-field>
+
+    <button color="accent" mat-raised-button type="submit">
+      Post Blog
+    </button>
+  </form>
+</mat-card>

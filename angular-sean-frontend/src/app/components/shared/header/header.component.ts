@@ -10,8 +10,11 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  userIsAuthenticated = false;
+  public userIsAdmin = false;
+  public userIsAuthenticated = false;
+
   private authListenerSubs: Subscription;
+  private adminListenerSubs: Subscription;
 
 
 
@@ -20,6 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.userIsAdmin = this.authService.getIsAdmin();
+    this.adminListenerSubs = this.authService.getAdminStatusListener()
+    .subscribe(isAdmin => {
+      this.userIsAdmin = isAdmin;
+    });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
@@ -32,5 +40,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
+    this.adminListenerSubs.unsubscribe();
   }
 }

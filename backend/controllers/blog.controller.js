@@ -19,12 +19,9 @@ exports.create_blog = async function (req, res, next) {
                                         is_deleted: false,
                                         user_id: user.id
                                    }
-                              }).spread(function (result, created) {
+                              }).spread(function (result,created) {
                                    if (created) {
-                                        res.status(201).json({
-                                             message: 'Blog has been created!',
-                                             blog: result
-                                        })
+                                        res.status(201).json(created)
                                    } else {
                                         res.status(400).json({
                                              message: 'Could not validate your credentials, please log in and try again.'
@@ -51,10 +48,7 @@ exports.get_blog = async function (req, res, next) {
                          if (user) {
                               models.blogs.findById(req.params.id)
                                    .then(blog => {
-                                        res.status(200).json({
-                                             message: 'We found your blog.',
-                                             blog
-                                        })
+                                        res.status(200).json(blog)
                                    })
                          } else {
                               res.status(404).json({
@@ -80,22 +74,42 @@ exports.get_all_blogs = async function (req, res, next) {
           if (token) {
                credentialService.confirmIdentity(token)
                     .then(user => {
-                         if (user) {
-                              models.blogs.findAll({
-                                   where: { is_deleted: false }
-                              }).then(blogs => {
-                                   if (blogs) {
-                                        res.status(200).json({
-                                             message: 'We found all the blogs stored in the database.',
-                                             blogs
-                                        })
-                                   } else {
-                                        res.status(404).json({
-                                             message: 'We were unable to locate any blogs in the database!'
-                                        })
+                         if (user) {  
+                              const pageSize = + req.query.pagesize;
+                              const currentPage = +req.query.page;
+                              const paginate = (query, { currentPage, pageSize }) => {
+                                   const offset = pageSize * (currentPage - 1);
+                                   const limit = pageSize;
+                                   return {
+                                        ...query,
+                                        offset,
+                                        limit
                                    }
+                              }
+                              let fetchedBlogs;
+                              models.blogs.findAll(
+                                   paginate(
+                                        {
+                                             where: { is_deleted: false },
+                                        },
+                                        { currentPage, pageSize }
+                                   )
+                              ) .then(documents => {
+                              fetchedBlogs = documents;
+                              //console.log(documents);
+                              return models.users.findAndCountAll();
+                         }).then(count => {
+                              res.status(200).json({
+                                   message: "Blogs fetched successfully.",
+                                   blogs: fetchedBlogs,
+                                   maxBlogs: count
+                              });
+                         })/* .catch(error => {
+                              res.status(500).json({
+                                   message: 'Cound not fetch blogs, please try again later.'
                               })
-                         }
+                         }) */
+                         } 
                     })
           } else {
                return res.status(401).json({
@@ -148,11 +162,11 @@ exports.get_users_blogs = async function (req, res, next) {
 exports.update_blog = async function (req, res, next) {
      try {
           let token = req.headers['key'];
-          let blog_id = parseInt(req.params.id);
           if (token) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
+                              let blogId = parseInt(req.params.id);
                               models.blogs.update({
                                    title: req.body.title,
                                    description: req.body.description,
@@ -161,7 +175,7 @@ exports.update_blog = async function (req, res, next) {
                                    is_deleted: false
                               }, {
                                    where: {
-                                        id: blog_id
+                                        id: req.params.id
                                    }
                               }).then(function (result, error) {
                                    if (result) {

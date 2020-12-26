@@ -14,12 +14,12 @@ const routes: Routes = [
   { path: 'users-registration', component: UserSignupComponent },
   { path: 'users-login', component: UserLoginComponent },
   { path: 'users-profile', component: UserProfileComponent },
-  { path: 'users-list', component: ListUsersComponent },
+  { path: 'admin-users-list', component: ListUsersComponent },
   { path: 'users-update/:userId', component: UpdateUserComponent },
   { path: 'users-new-blog', component: BlogCreateComponent},
-  { path: 'blog-list', component: BlogListComponent },
-  { path: 'blog-details', component: BlogDetailsComponent },
-  { path: 'blog-update', component: BlogUpdateComponent }
+  { path: 'users-blogs-list', component: BlogListComponent },
+  { path: 'users-blogs-details/:blogId', component: BlogDetailsComponent },
+  { path: 'users-blogs-update/:blogId', component: BlogCreateComponent }
 ];
 
 @NgModule({

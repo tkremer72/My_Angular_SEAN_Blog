@@ -16,10 +16,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   public isLoading = false;
   public isAuthenticated = false;
-  public is_admin = false;
+  public isAdmin = false;
   public user: User;
   public blogs: Blog[] = [];
   public userIsAuthenticated = false;
+  public userIsAdmin = false;
 
   private authStatusSubs: Subscription;
   private adminStatusSubs: Subscription;
@@ -36,10 +37,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.getProfile();
     this.getBlogs();
-    this.is_admin = this.authService.getIsAdmin();
+    this.isAdmin = this.authService.getIsAdmin();
     this.adminStatusSubs = this.authService.getAdminStatusListener()
     .subscribe(isAdmin => {
-      this.is_admin = isAdmin;
+      this.userIsAdmin = isAdmin;
     });
     this.isAuthenticated = this.authService.getIsAuth();
     this.authStatusSubs = this.authService.getAuthStatusListener()
