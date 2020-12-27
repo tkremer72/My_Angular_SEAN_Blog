@@ -5,7 +5,7 @@ const blogControl = require('../controllers/blog.controller');
 
 router.get('/:id', blogControl.get_blog);
 
-router.get('/all/blogs?', blogControl.get_all_blogs);
+router.get('/all/blogs', blogControl.get_all_blogs);
 
 router.get('/user/blogs', blogControl.get_users_blogs);
 

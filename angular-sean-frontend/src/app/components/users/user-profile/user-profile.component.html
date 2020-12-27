@@ -1,7 +1,7 @@
 <div *ngIf="isLoading"></div>
 
 <div class="container">
-  <mat-card *ngIf="user">
+  <mat-card *ngIf="user && isAuthenticated">
     <h1>{{user.first_name}} {{user.last_name}}</h1>
     <div class="user-image">
       <img [src]='user.imagePath' [alt]="user.user_name">
@@ -16,8 +16,23 @@
         Phone: {{user.user_phone}} </p>
     </div>
     <a class="col s12 m4 l4" routerLink="/users-update/{{user.id}}">UPDATE</a>
-<div *ngFor="let blog of blogs">
-  {{blog.title}}
+  </mat-card>
 </div>
+<hr *ngIf="isAuthenticated">
+<div class="container" *ngIf="isAuthenticated">
+  <mat-card class="panel">
+    <mat-accordion class="panel" multi="true">
+      <mat-expansion-panel *ngFor="let blog of blogs">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h2>{{blog.title}}</h2>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          <h3>Author: {{blog.author}} Published: {{blog.date | date}}</h3>
+        </mat-panel-description>
+        <p> {{blog.description}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-card>
 </div>

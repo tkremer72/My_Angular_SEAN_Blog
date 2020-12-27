@@ -2,39 +2,61 @@ var models = require('../models');
 var credentialService = require('../services/authorize');
 
 //Get a users profile using the token
-exports.get_profile =  function(req, res, next) {
-     let token = req.headers['key'];
-     if (token) {
-       credentialService.confirmIdentity(token).then((user, error) => {
-         if (user) {
-           res.status(200).json(user);
-         } else {
-           res.status(400).json(error);
-         }
-       });
-     } else {
-       res.status(500).json(error);
+exports.get_profile =  async function(req, res, next) {
+     try {
+          let token = req.headers['key'];
+          if (token) {
+            credentialService.confirmIdentity(token).then((user) => {
+              if (user) {
+                res.status(200).json(user);
+              } else {
+                return res.status(401).json({
+                     message: 'Invalid credentials, you are not authorized.  Please log in and try again.'
+                });
+              }
+            });
+          } else {
+            return res.status(401).json({
+                 message: 'You are not authorized.  Please log in and try again later.'
+            });
+          }
+     } catch(err) {
+          return res.status(500).json({
+               message: 'Internal server error, please log in and try again later.'
+          })
      }
    }
+
 //Get a user for the  update user form
-exports.get_user = function(req, res, next) {
-     let token = req.headers['key'];
-     if (token) {
-       credentialService.confirmIdentity(token).then((user) => {
-         if (user) {
-           models.users.findByPk(parseInt(req.params.id)).then(user => {
-             res.status(200).json(user);
-           });
-         } else {
-           res.status(400).json({
-                message: 'You are not authorized.'
-           });
-         }
-       });
-     } else {
-       res.status(500).json(error);
+exports.get_user = async function(req, res, next) {
+     try {
+          let token = req.headers['key'];
+          if (token) {
+            credentialService.confirmIdentity(token)
+            .then((user) => {
+              if (user) {
+                models.users.findByPk(parseInt(req.params.id))
+                .then(user => {
+                  res.status(200).json(user);
+                });
+              } else {
+                res.status(401).json({
+                     message: 'Invalid credentials, you are not authorized. Please log in and try again.'
+                });
+              }
+            });
+          } else {
+            res.status(401).json({
+                 message: 'You are not authorized, please try again later.'
+            });
+          }
+     } catch(err) {
+          return res.status(500).json({
+               message: 'Internal server error, something went wrong.  Please try again later.'
+          })
      }
    }
+
 //Get all of the users in the database. 
 exports.get_users = async function (req, res, next) {
      try {
@@ -57,6 +79,10 @@ exports.get_users = async function (req, res, next) {
                                              message: 'Could not find any users.'
                                         })
                                    }
+                              })
+                         } else {
+                              return res.status(401).json({
+                                   message: 'You are not authorized, please log in and try again!'
                               })
                          }
                     })
@@ -98,7 +124,7 @@ exports.update_user = async function (req, res, next) {
                                    user_email: req.body.user_email,
                               }, {
                                    where: { user_email: req.body.user_email }
-                              })).then(function (result, error) {
+                              })).then(function (result) {
                                    if (result) {
                                         res.status(200).json({
                                              message: 'User information has been updated!'

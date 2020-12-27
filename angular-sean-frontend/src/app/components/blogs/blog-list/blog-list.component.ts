@@ -2,8 +2,9 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BlogService } from '../../../shared/services/blog.service';
 import { Blog } from '../../../shared/models/blog.model';
-import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-list',
@@ -21,6 +22,7 @@ export class BlogListComponent implements OnInit, OnDestroy {
 
    userIsAuthenticated = false;
    userId: string;
+   user_id: string;
 
   private blogSubs: Subscription;
   private authStatusSubs: Subscription;
@@ -28,7 +30,8 @@ export class BlogListComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -59,7 +62,8 @@ export class BlogListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.blogService.deleteBlog(blogId).subscribe(() => {
       this.blogService.getBlogs(this.blogsPerPage, this.currentPage)
-    })
+      this.router.navigate(['/users-profile'])
+    });
   }
   ngOnDestroy() {
     this.authStatusSubs.unsubscribe();

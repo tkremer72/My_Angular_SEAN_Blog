@@ -2,3 +2,13 @@
 
 html, body { height: 100%; width: auto; margin-bottom: 135px; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: slategrey; }
+.my-panel .mat-dialog-container {
+  overflow: hidden;
+  color: black;
+  border: 5px outset darkslategrey;
+  border-radius: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 5px 5px 5px 5px;
+  background-color: rgb(114, 114, 117);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}

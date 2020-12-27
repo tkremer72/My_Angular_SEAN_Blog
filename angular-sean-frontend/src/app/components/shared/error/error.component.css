@@ -1,0 +1,18 @@
+h1 {
+  text-align: center;
+}
+p {
+  font-size: 19px;
+}
+button {
+  padding: 5px 20px;
+  border: 3px outset darkslategrey;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  color: white;
+    font-size: 15px;
+    line-height: 20px;
+    height: auto;
+    width: auto;
+}
+

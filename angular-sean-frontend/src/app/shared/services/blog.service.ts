@@ -64,12 +64,11 @@ export class BlogService {
       });
     });
   }
-
-/* getUsersBlogs(id: string) {
+ getUsersBlogs() {
   return this.http.get(BACKEND + 'user/blogs')/* .subscribe((blogs: any) => {
     this.blogs = blogs;
-  }) 
-} */
+  })*/
+}
 
   getBlog(id: string) {
     return this.http.get<{
@@ -94,7 +93,7 @@ export class BlogService {
       message: string,
       blog: Blog
     }>(BACKEND + 'create', blogData).subscribe((resData) => {
-      console.log(blogData);
+      //console.log(blogData);
       this.router.navigate(['/users-blogs-list']);
     })
   }
@@ -108,10 +107,10 @@ updateBlog(id: string, title: string, description: string, date: string, author:
   }
   this.http.put(BACKEND + id, blogData)
   .subscribe(responseData => {
-    this.router.navigate(['/'])
+    this.router.navigate(['/users-profile'])
   })
-
 }
+
   deleteBlog(blogId: string) {
     /* let token = localStorage.getItem('token');
     let header = new HttpHeaders().set('key', token); */

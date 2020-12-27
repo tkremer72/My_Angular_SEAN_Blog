@@ -19,17 +19,25 @@ exports.create_blog = async function (req, res, next) {
                                         is_deleted: false,
                                         user_id: user.id
                                    }
-                              }).spread(function (result,created) {
+                              }).spread(function (result, created) {
                                    if (created) {
                                         res.status(201).json(created)
                                    } else {
                                         res.status(400).json({
-                                             message: 'Could not validate your credentials, please log in and try again.'
+                                             message: 'Could not complete request, please log in and try again.'
                                         })
                                    }
                               })
+                         } else {
+                              return res.status(401).json({
+                                   message: 'Invalid credentials, please log in and try again later.'
+                              })
                          }
                     })
+          } else {
+               return res.status(401).json({
+                    message: 'You are not authorized, please log in and try again.'
+               })
           }
      } catch (err) {
           return res.status(500).json({
@@ -51,7 +59,7 @@ exports.get_blog = async function (req, res, next) {
                                         res.status(200).json(blog)
                                    })
                          } else {
-                              res.status(404).json({
+                              return res.status(404).json({
                                    message: 'We could not find any blogs with that id.'
                               })
                          }
@@ -109,7 +117,11 @@ exports.get_all_blogs = async function (req, res, next) {
                                    message: 'Cound not fetch blogs, please try again later.'
                               })
                          }) */
-                         } 
+                         } else {
+                              return res.status(401).json({
+                                   message: 'You are not authorized, please log in and try again.'
+                              })
+                         }
                     })
           } else {
                return res.status(401).json({
@@ -132,7 +144,7 @@ exports.get_users_blogs = async function (req, res, next) {
                          let user_id = parseInt(req.params.id);
                          if (user) {
                               models.blogs.findAll({
-                                   where: { id: user_id, is_deleted: false }
+                                   where: { user_id: user.id, is_deleted: false }
                               }).then(blogs => {
                                    if (blogs) {
                                         res.status(200).json(blogs)
@@ -141,6 +153,10 @@ exports.get_users_blogs = async function (req, res, next) {
                                              message: 'We could not find any blogs by you, please create one.'
                                         })
                                    }
+                              })
+                         } else {
+                              return res.status(401).json({
+                                   message: 'You are not authorized, please log in and try again later.'
                               })
                          }
                     })
@@ -180,13 +196,13 @@ exports.update_blog = async function (req, res, next) {
                                              message: 'Blog successfully updated.'
                                         })
                                    } else {
-                                        res.status(404).json({
+                                       return res.status(404).json({
                                              message: 'Could not update blog, id does not exist.'
                                         })
                                    }
                               })
                          } else {
-                              res.status(401).json({
+                              return res.status(401).json({
                                    message: 'Invalid credentials, please log in and try again.'
                               })
                          }
@@ -215,13 +231,13 @@ exports.delete_blog = async function (req, res, next) {
                                              message: 'Blog successfully deleted.'
                                         })
                                    } else {
-                                        res.status(404).json({
+                                        return res.status(404).json({
                                              message: 'Could not find any blogs matching that id.'
                                         })
                                    }
                               })
                          } else {
-                              res.status(401).json({
+                              return res.status(401).json({
                                    message: 'Invalid credentials, please log in and try again.'
                               })
                          }

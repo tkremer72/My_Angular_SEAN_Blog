@@ -39,7 +39,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.getProfile();
-    //this.getUserBlogs();
     this.isAdmin = this.authService.getIsAdmin();
     this.adminStatusSubs = this.authService.getAdminStatusListener()
     .subscribe(isAdmin => {
@@ -56,16 +55,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const userId = +this.route.snapshot.paramMap.get('id');
     this.userService.getProfile(userId).subscribe((user: any) => {
       this.user = user;
+  this.blogService.getUsersBlogs().subscribe((blogs: any) => {
+    this.blogs = blogs;
+  })
       //console.log(user);
     });
   }
-  /* getUserBlogs() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.blogService.getUsersBlogs(this.id).subscribe((blogs: any) => {
-      this.blogs = blogs;
-      console.log(blogs)
-    });
-  } */
+
 ngOnDestroy() {
   this.authStatusSubs.unsubscribe();
   this.adminStatusSubs.unsubscribe();

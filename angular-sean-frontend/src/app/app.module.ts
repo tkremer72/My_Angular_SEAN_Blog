@@ -15,12 +15,12 @@ import { UserSignupComponent } from './components/auth/user-signup/user-signup.c
 import { BlogCreateComponent } from './components/blogs/blog-create/blog-create.component';
 import { BlogListComponent } from './components/blogs/blog-list/blog-list.component';
 import { BlogDetailsComponent } from './components/blogs/blog-details/blog-details.component';
-import { BlogUpdateComponent } from './components/blogs/blog-update/blog-update.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 import { ListUsersComponent } from './components/users/list-users/list-users.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { ErrorComponent } from './components/shared/error/error.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +30,12 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     BlogCreateComponent,
     BlogListComponent,
     BlogDetailsComponent,
-    BlogUpdateComponent,
     UpdateUserComponent,
     UserProfileComponent,
     ListUsersComponent,
     HeaderComponent,
     FooterComponent,
+    ErrorComponent,
   ],
   imports: [
     AngularMaterialModule,
@@ -51,11 +51,11 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }/* , {
+  }, {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
     multi: true
-  } */],
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

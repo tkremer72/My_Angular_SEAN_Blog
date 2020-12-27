@@ -21,6 +21,14 @@ mat-card {
   align-items: center;
   width: 45%;
 }
+.panel {
+  display: flex;
+  color: black;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+}
 .card-content {
   display: flex;
   text-align: center;

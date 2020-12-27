@@ -5,7 +5,7 @@ mat-card {
  color: black;
  background-color: rgb(114, 114, 117);
  flex-direction: column;
- justify-content: start;
- align-items: start;
+ justify-content: flex-start;
+ align-items: flex-start;
  width: 75%;
 }

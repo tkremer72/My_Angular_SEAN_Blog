@@ -33,13 +33,13 @@ exports.user_signup = async function (req, res, next) {
                }
           })).spread(function (result, created) {
                if (created) {
-                    console.log(result);
+                   // console.log(result);
                     res.status(201).json({
                          message: 'User was created.'
                     });
                } else {
-                    res.status(400).json({
-                         message: result.message
+                    return res.status(400).json({
+                         message: 'Could not create user, please try again later.'
                     })
                }
           })
@@ -73,7 +73,7 @@ exports.user_login = async function(req, res, next) {
                              is_admin: fetchedUser.is_admin
                         })
                    } else {
-                        res.status(401).json({
+                        return res.status(401).json({
                              message: 'You are not authorized, please check your credentials and try again.'
                         });
                    }
@@ -85,7 +85,7 @@ exports.user_login = async function(req, res, next) {
           })
      }
 }
-//Allow admin only to delete or remove a user from the databases.
+// Change this to Allow admin only to delete or remove a user from the databases.
 exports.delete_user = async function (req, res, next) {
      try {
           let token = req.headers['key'];
@@ -106,6 +106,10 @@ exports.delete_user = async function (req, res, next) {
                     } else {
                          res.status(400).json({message: 'Could not complete your request, please make sure you are logged in and try again.'})
                     }
+               })
+          } else {
+               return res.status(401).json({
+                    message: 'You are not authorized, please log in and try again later.'
                })
           }
      } catch (err) {
