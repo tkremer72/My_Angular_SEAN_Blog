@@ -16,9 +16,11 @@ const routes: Routes = [
   { path: 'users-profile', component: UserProfileComponent },
   { path: 'admin-users-list', component: ListUsersComponent },
   { path: 'users-update/:userId', component: UpdateUserComponent },
-  { path: 'users-new-blog', component: BlogCreateComponent},
+  { path: 'users-new-blog', component: BlogCreateComponent },
   { path: 'users-blogs-list', component: BlogListComponent },
+  { path: 'users-update-blog/:blogId', component: BlogCreateComponent },
   { path: 'users-blogs-details/:blogId', component: BlogDetailsComponent },
+  { path: 'admin-main-page', component: ListUsersComponent },
 ];
 
 @NgModule({

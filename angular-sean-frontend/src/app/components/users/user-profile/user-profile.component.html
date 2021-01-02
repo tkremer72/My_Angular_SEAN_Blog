@@ -1,7 +1,7 @@
 <div *ngIf="isLoading"></div>
 
 <div class="container">
-  <mat-card *ngIf="user && isAuthenticated">
+  <mat-card *ngIf="user && userIsAuthenticated">
     <h1>{{user.first_name}} {{user.last_name}}</h1>
     <div class="user-image">
       <img [src]='user.imagePath' [alt]="user.user_name">
@@ -18,8 +18,8 @@
     <a class="col s12 m4 l4" routerLink="/users-update/{{user.id}}">UPDATE</a>
   </mat-card>
 </div>
-<hr *ngIf="isAuthenticated">
-<div class="container" *ngIf="isAuthenticated">
+<hr *ngIf="userIsAuthenticated">
+<div class="container" *ngIf="blogs.length > 0 && !isLoading">
   <mat-card class="panel">
     <mat-accordion class="panel" multi="true">
       <mat-expansion-panel *ngFor="let blog of blogs">
@@ -32,6 +32,11 @@
           <h3>Author: {{blog.author}} Published: {{blog.date | date}}</h3>
         </mat-panel-description>
         <p> {{blog.description}}</p>
+        <mat-action-row>
+          <a mat-button color="primary" [routerLink]="['/users-update-blog', blog.id]">EDIT</a>
+          <a mat-button color="primary" [routerLink]="['/users-blogs-details', blog.id]">VIEW</a>
+          <button mat-button color="warn" (click)="onDelete(blog.id)">DELETE</button>
+        </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card>

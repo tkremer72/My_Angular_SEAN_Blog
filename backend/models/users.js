@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   users.associate = function(models) {
-    users.hasMany(models.blogs, {foreignKey: 'user_id'});
+    //users.hasMany(models.blogs, {foreignKey: 'user_id'});
   };
   return users;
 };

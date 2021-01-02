@@ -43,7 +43,8 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
             title: blogData.title,
             description: blogData.description,
             date: blogData.date,
-            author: blogData.author
+            author: blogData.author,
+            creator: blogData.user_id
           }
         })
       } else {

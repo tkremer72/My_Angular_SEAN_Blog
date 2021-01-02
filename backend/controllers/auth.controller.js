@@ -86,37 +86,4 @@ exports.user_login = async function(req, res, next) {
      }
 }
 // Change this to Allow admin only to delete or remove a user from the databases.
-exports.delete_user = async function (req, res, next) {
-     try {
-          let token = req.headers['key'];
-          let user_id = parseInt(req.params.id);
-          if(token) {
-               credentialService.confirmIdentity(token)
-               .then(user => {
-                    if(user) {
-                         models.auth.destroy({
-                              where: { id: user_id }
-                         }).then(models.users.destroy({
-                              where: { id: user_id }
-                         })).then(result => {
-                              res.status(200).json({
-                                   message: 'User has been removed from the databases!'
-                              })
-                         })
-                    } else {
-                         res.status(400).json({message: 'Could not complete your request, please make sure you are logged in and try again.'})
-                    }
-               })
-          } else {
-               return res.status(401).json({
-                    message: 'You are not authorized, please log in and try again later.'
-               })
-          }
-     } catch (err) {
-          return res.status(500).json({
-               message: 'Whoops, something went wrong, please try again later!'
-          });
-     }
-}
-
 

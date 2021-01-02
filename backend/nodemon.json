@@ -1,0 +1,11 @@
+{
+     "env": {
+          "DB_USERNAME": "admin",
+          "DB_PASSWORD": "Daddykjune1!",
+          "DB_DATABASE": "TEK_BLOG_DATABASE",
+          "DB_HOSTNAME": "tek-sean-blog-database.cvdkwwll47dt.us-east-2.rds.amazonaws.com",
+          "DB_DIALECT": "mysql",
+          "DB_ALIAS": false,
+          "TOKEN_KEY": "this_is_the_secret_key_and_should_be_long_and_should_not_be_given_to_anyone_ever"
+     }
+}

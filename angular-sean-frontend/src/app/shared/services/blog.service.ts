@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { identifierModuleUrl } from '@angular/compiler';
 
 const BACKEND = environment.blogsApi;
 
@@ -64,10 +63,11 @@ export class BlogService {
       });
     });
   }
+
  getUsersBlogs() {
-  return this.http.get(BACKEND + 'user/blogs')/* .subscribe((blogs: any) => {
-    this.blogs = blogs;
-  })*/
+  return this.http.get(
+    BACKEND + 'user/blogs'
+    );
 }
 
   getBlog(id: string) {

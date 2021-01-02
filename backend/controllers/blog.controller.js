@@ -82,19 +82,19 @@ exports.get_all_blogs = async function (req, res, next) {
           if (token) {
                credentialService.confirmIdentity(token)
                     .then(user => {
-                         if (user) {  
+                         if (user) {
                               let fetchedBlogs;
-                             /*  const pageSize = +req.query.pagesize;
-                              const currentPage = +req.query.page;
-                              const paginate = (query, { currentPage, pageSize }) => {
-                                   const offset = (pageSize * (currentPage - 1));
-                                   const limit = pageSize;
-                                   return {
-                                        ...query,
-                                        offset,
-                                        limit
-                                   }
-                              } */
+                              /*  const pageSize = +req.query.pagesize;
+                               const currentPage = +req.query.page;
+                               const paginate = (query, { currentPage, pageSize }) => {
+                                    const offset = (pageSize * (currentPage - 1));
+                                    const limit = pageSize;
+                                    return {
+                                         ...query,
+                                         offset,
+                                         limit
+                                    }
+                               } */
                               models.blogs.findAll(
                                    /* paginate(
                                         {
@@ -102,17 +102,17 @@ exports.get_all_blogs = async function (req, res, next) {
                                         },
                                         { currentPage, pageSize }
                                    ) */
-                              ) .then(documents => {
-                              fetchedBlogs = documents;
-/*                               console.log(documents);
- */                              //models.users.countDocuments();
-                         }).then(count => {
-                              res.status(200).json({
-                                   message: "Blogs fetched successfully.",
-                                   blogs: fetchedBlogs,
-                                   maxBlogs: count
-                              });
-                         })/* .catch(error => {
+                              ).then(documents => {
+                                   fetchedBlogs = documents;
+                                   /*                               console.log(documents);
+                                    */                              //models.users.countDocuments();
+                              }).then(count => {
+                                   res.status(200).json({
+                                        message: "Blogs fetched successfully.",
+                                        blogs: fetchedBlogs,
+                                        maxBlogs: count
+                                   });
+                              })/* .catch(error => {
                               res.status(500).json({
                                    message: 'Cound not fetch blogs, please try again later.'
                               })
@@ -143,10 +143,12 @@ exports.get_users_blogs = async function (req, res, next) {
                     .then(user => {
                          let user_id = parseInt(req.params.id);
                          if (user) {
+                              let fetchedBlogs;
                               models.blogs.findAll({
                                    where: { user_id: user.id, is_deleted: false }
                               }).then(blogs => {
                                    if (blogs) {
+                                        //fetchedBlogs = blogs;
                                         res.status(200).json(blogs)
                                    } else {
                                         return res.status(404).json({
@@ -196,7 +198,7 @@ exports.update_blog = async function (req, res, next) {
                                              message: 'Blog successfully updated.'
                                         })
                                    } else {
-                                       return res.status(404).json({
+                                        return res.status(404).json({
                                              message: 'Could not update blog, id does not exist.'
                                         })
                                    }
@@ -218,13 +220,13 @@ exports.update_blog = async function (req, res, next) {
 exports.delete_blog = async function (req, res, next) {
      try {
           let token = req.headers['key'];
-          let blog_id = parseInt(req.params.id);
+          let blogId = parseInt(req.params.id);
           if (token) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
                               models.blogs.destroy({
-                                   where: { id: blog_id }
+                                   where: { id: blogId }
                               }).then(result => {
                                    if (result) {
                                         res.status(200).json({

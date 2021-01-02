@@ -203,7 +203,6 @@ selectedState = this.states[2].value;
       this.form.value.user_mobile,
       this.form.value.image
     )
-    this.form.reset();
   }
   ngOnDestroy() {
     this.authStatusSubs.unsubscribe();

@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
+    /* creator: {
+      type: DataTypes.INTEGER,
+      
+    }, */
     is_deleted: {
       type: DataTypes.BOOLEAN,
       default: false
@@ -28,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   blogs.associate = function(models) {
-    blogs.belongsTo(models.users, {foreignKey: 'user_id'});
+    //blogs.belongsTo(models.users, {foreignKey: 'user_id'});
   };
   return blogs;
 };
