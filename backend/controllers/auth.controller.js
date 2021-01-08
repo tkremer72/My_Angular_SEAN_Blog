@@ -2,6 +2,9 @@ var models = require('../models');
 const { validationResult } = require('express-validator');
 var credentialService = require('../services/authorize');
 
+
+
+
 //Create a new user if one does not exist
 exports.user_signup = async function (req, res, next) {
      const errors = validationResult(req);
@@ -10,7 +13,7 @@ exports.user_signup = async function (req, res, next) {
           next(new HttpError('Invalid inputs passed, please check your data!', 422))
      }
      try {
-          await models.users.findOrCreate({
+          await models.User.findOrCreate({
                where: { user_email: req.body.user_email },
                defaults: {
                     first_name: '',
@@ -24,7 +27,7 @@ exports.user_signup = async function (req, res, next) {
                     user_mobile: '(919)999-9999',
                     is_deleted: false
                }
-          }).then(await models.auth.findOrCreate({
+          }).then(await models.Auth.findOrCreate({
                where: { user_email: req.body.user_email },
                defaults: {
                     user_password: credentialService.lockPassword(req.body.user_password),
@@ -53,7 +56,7 @@ exports.user_signup = async function (req, res, next) {
 exports.user_login = async function(req, res, next) {
      try {
           let fetchedUser;
-         await models.auth.findOne({
+         await models.Auth.findOne({
               where: { user_email: req.body.user_email }
          }).then(user => {
               if(!user) {
@@ -85,5 +88,4 @@ exports.user_login = async function(req, res, next) {
           })
      }
 }
-// Change this to Allow admin only to delete or remove a user from the databases.
 

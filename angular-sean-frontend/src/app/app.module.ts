@@ -21,6 +21,7 @@ import { ListUsersComponent } from './components/users/list-users/list-users.com
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { ErrorComponent } from './components/shared/error/error.component';
+import { UserDetailsComponent } from './components/users/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ErrorComponent } from './components/shared/error/error.component';
     HeaderComponent,
     FooterComponent,
     ErrorComponent,
+    UserDetailsComponent,
   ],
   imports: [
     AngularMaterialModule,

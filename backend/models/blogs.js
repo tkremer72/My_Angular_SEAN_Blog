@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const blogs = sequelize.define('blogs', 
+  const Blog = sequelize.define(
+    'Blog', 
   {
     title: {
       type: DataTypes.STRING,
@@ -31,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: true
     }
   }, {});
-  blogs.associate = function(models) {
-    //blogs.belongsTo(models.users, {foreignKey: 'user_id'});
+  Blog.associate = function(models) {
+    //Blog.belongsTo(models.users, {foreignKey: 'user_id'});
   };
-  return blogs;
+  return Blog;
 };

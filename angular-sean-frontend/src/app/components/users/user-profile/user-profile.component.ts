@@ -1,8 +1,8 @@
 import { AuthService } from '../../../shared/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../shared/services/blog.service';
 import { Blog } from '../../../shared/models/blog.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
@@ -39,11 +39,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.getProfile();
-    this.blogSubs = this.blogService.getBlogUpdateListener().subscribe((blogData: { blogs: Blog[]}) => {
+    this.blogSubs = this.blogService.getBlogUpdateListener()
+    .subscribe((blogData: { blogs: Blog[] }) => {
       this.blogs = blogData.blogs;
     })
     this.userId = this.authService.getUserId();
-
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
@@ -52,6 +52,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
     this.isLoading = false;
   }
+
   getProfile() {
     const userId = +this.route.snapshot.paramMap.get('id');
     this.userService.getProfile(userId).subscribe((user: any) => {
@@ -62,13 +63,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
     });
   }
+
   onDelete(blogId: string) {
     this.isLoading = true;
     this.blogs = this.blogs.filter(blog => blog.id !== blog.id);
     this.blogService.deleteBlog(blogId).subscribe(result => {
     });
   }
+  
   ngOnDestroy() {
     this.authStatusSubs.unsubscribe();
+    this.blogSubs.unsubscribe();
   }
 }

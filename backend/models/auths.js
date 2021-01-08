@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const auth = sequelize.define('auth', 
+  const Auth = sequelize.define(
+    'Auth', 
   {
     user_email: {
       type: DataTypes.STRING,
@@ -20,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       default: false
     }
   }, {});
-  auth.associate = function(models) {
+  Auth.associate = function(models) {
   };
-  return auth;
+  return Auth;
 };

@@ -1,7 +1,7 @@
 {
     "tables": {
-        "auths": {
-            "tableName": "auths",
+        "Auths": {
+            "tableName": "Auths",
             "schema": {
                 "id": {
                     "allowNull": false,
@@ -44,8 +44,8 @@
             },
             "indexes": []
         },
-        "blogs": {
-            "tableName": "blogs",
+        "Blogs": {
+            "tableName": "Blogs",
             "schema": {
                 "id": {
                     "allowNull": false,
@@ -82,13 +82,6 @@
                 "user_id": {
                     "foreignKey": true,
                     "field": "user_id",
-                    "allowNull": true,
-                    "references": {
-                        "model": "users",
-                        "key": "id"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -104,8 +97,8 @@
             },
             "indexes": []
         },
-        "users": {
-            "tableName": "users",
+        "Users": {
+            "tableName": "Users",
             "schema": {
                 "id": {
                     "allowNull": false,

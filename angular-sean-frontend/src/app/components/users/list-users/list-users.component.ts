@@ -1,12 +1,13 @@
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { User } from '../../../shared/models/user.model';
-import { AuthService } from '../../../shared/services/auth.service';
-import { UserService } from '../../../shared/services/user.service';
-import { Subscription } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/shared/services/admin.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { PageEvent } from '@angular/material/paginator';
+import { User } from '../../../shared/models/user.model';
+//import { UserService } from '../../../shared/services/user.service';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
@@ -14,19 +15,21 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 })
 export class ListUsersComponent implements OnInit, OnDestroy {
 
-  users: User[] = []
-  isLoading = false;
+  public users: User[] = []
 
-  totalUsers = 0;
+  public user: User;
+  public isLoading = false;
 
-  usersPerPage = 2;
+  public totalUsers = 0;
+  public usersPerPage = 2;
+  public pageSizeOptions = [1, 2, 5, 10];
+  public currentPage = 1;
 
-  pageSizeOptions = [1, 2, 5, 10];
-
-  currentPage = 1;
-
-  userIsAuthenticated = false;
-  userId: string;
+  public isAuthenticated = false;
+  public userIsAuthenticated = false;
+  public isAdmin = false;
+  public userIsAdmin = false;
+  public userId: string;
 
   private usersSubs: Subscription;
   private authStatusSubs: Subscription;
@@ -34,8 +37,8 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private adminService: AdminService,
-    private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router,
     private sanatizer: DomSanitizer
   ) { }
 
@@ -56,22 +59,30 @@ export class ListUsersComponent implements OnInit, OnDestroy {
         this.userId = this.authService.getUserId();
       });
   }
-  onPageChange(pageData: PageEvent) {
+ /*  onPageChange(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.usersPerPage = pageData.pageSize;
     this.adminService.getUsers();
-  }
-
-  onDelete() {
+  } */
+  onDelete(userId: string) {
     this.isLoading = true;
-    this.users = this.users.filter(user => user.id !== user.id);
-    const userId = +this.route.snapshot.paramMap.get('id');
-    this.adminService.deleteUser(this.userId)
+    this.users = this.users.filter(blog => blog.id !== blog.id);
+    this.adminService.deleteUser(userId).subscribe(result => {
+    });
   }
+ /*  onDelete() {
+    this.isLoading = true;
+    // const userId = this.route.snapshot.paramMap.get('id');
+    // this.adminService.getUsers();
+    this.adminService.deleteUser(this.userId).subscribe(() => {
+      this.users = this.users.filter(user => user.id !== user.id);
+    });
+  } */
   sanatizeImageUrl(imagePath: string): SafeUrl {
     return this.sanatizer.bypassSecurityTrustUrl(imagePath);
   }
+  
   ngOnDestroy() {
     this.authStatusSubs.unsubscribe();
     this.usersSubs.unsubscribe();

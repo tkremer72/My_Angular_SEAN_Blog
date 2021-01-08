@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const users = sequelize.define(
-    'users', 
+  const User = sequelize.define(
+    'User', 
     {
     id: {
       type: DataTypes.INTEGER,
@@ -59,8 +59,8 @@ module.exports = (sequelize, DataTypes) => {
       default: false
     }
   }, {});
-  users.associate = function(models) {
-    //users.hasMany(models.blogs, {foreignKey: 'user_id'});
+  User.associate = function(models) {
+    //User.hasMany(models.blogs, {foreignKey: 'user_id'});
   };
-  return users;
+  return User;
 };

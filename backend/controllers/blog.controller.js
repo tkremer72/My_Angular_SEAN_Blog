@@ -9,7 +9,7 @@ exports.create_blog = async function (req, res, next) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
-                              models.blogs.findOrCreate({
+                              models.Blog.findOrCreate({
                                    where: { title: req.body.title },
                                    defaults: {
                                         title: req.body.title,
@@ -54,7 +54,7 @@ exports.get_blog = async function (req, res, next) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
-                              models.blogs.findById(req.params.id)
+                              models.Blog.findById(req.params.id)
                                    .then(blog => {
                                         res.status(200).json(blog)
                                    })
@@ -95,7 +95,7 @@ exports.get_all_blogs = async function (req, res, next) {
                                          limit
                                     }
                                } */
-                              models.blogs.findAll(
+                              models.Blog.findAll(
                                    /* paginate(
                                         {
                                              where: { is_deleted: false },
@@ -144,7 +144,7 @@ exports.get_users_blogs = async function (req, res, next) {
                          let user_id = parseInt(req.params.id);
                          if (user) {
                               let fetchedBlogs;
-                              models.blogs.findAll({
+                              models.Blog.findAll({
                                    where: { user_id: user.id, is_deleted: false }
                               }).then(blogs => {
                                    if (blogs) {
@@ -182,7 +182,7 @@ exports.update_blog = async function (req, res, next) {
                     .then(user => {
                          if (user) {
                               let blogId = parseInt(req.params.id);
-                              models.blogs.update({
+                              models.Blog.update({
                                    title: req.body.title,
                                    description: req.body.description,
                                    author: req.body.author,
@@ -192,7 +192,7 @@ exports.update_blog = async function (req, res, next) {
                                    where: {
                                         id: req.params.id
                                    }
-                              }).then(function (result, error) {
+                              }).then(function (result) {
                                    if (result) {
                                         res.status(202).json({
                                              message: 'Blog successfully updated.'
@@ -225,7 +225,7 @@ exports.delete_blog = async function (req, res, next) {
                credentialService.confirmIdentity(token)
                     .then(user => {
                          if (user) {
-                              models.blogs.destroy({
+                              models.Blog.destroy({
                                    where: { id: blogId }
                               }).then(result => {
                                    if (result) {

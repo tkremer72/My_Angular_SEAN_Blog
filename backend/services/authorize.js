@@ -21,7 +21,7 @@ var credentialService = {
       let userData = { user_email: decoded.user_email, userId: decoded.user_id }
       //<--- Decrypt token using same key used to encrypt
       //console.log(decoded);
-      return models.users.findByPk(decoded.user_id, userData); //<--- Return result of database query as promise
+      return models.User.findByPk(decoded.user_id, userData); //<--- Return result of database query as promise
     console.log(decoded.user_id, userData);
     } catch (err) {
       //console.log(err);

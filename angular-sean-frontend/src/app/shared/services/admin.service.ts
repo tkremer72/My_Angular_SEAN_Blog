@@ -24,7 +24,11 @@ export class AdminService {
   getUserUpdateListener() {
     return this.usersUpdated.asObservable();
   }
-  
+
+  // getUser(userId: string) {
+  //   return this.http.get(BACKEND + userId);
+  // }
+
   getUsers() {
     /* let token = localStorage.getItem('token');
     let header = new HttpHeaders().set('key', token); */
@@ -71,10 +75,6 @@ export class AdminService {
   deleteUser(userId: string) {
     /* let token = localStorage.getItem('token');
     let header = new HttpHeaders().set('key', token); */
-    return this.http.delete(
-      BACKEND + userId/* , { headers: header} */
-      ).subscribe(() => {
-        this.router.navigate(['admin-users-list'])
-      })
+    return this.http.delete(BACKEND + userId/* , { headers: header } */);
   }
 }

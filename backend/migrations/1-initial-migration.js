@@ -5,23 +5,23 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
- * createTable "auths", deps: []
- * createTable "users", deps: []
- * createTable "blogs", deps: [users]
+ * createTable "Auths", deps: []
+ * createTable "Blogs", deps: []
+ * createTable "Users", deps: []
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial-migration",
-    "created": "2020-12-26T19:11:45.297Z",
+    "created": "2021-01-02T20:49:09.033Z",
     "comment": ""
 };
 
 var migrationCommands = [{
         fn: "createTable",
         params: [
-            "auths",
+            "Auths",
             {
                 "id": {
                     "type": Sequelize.INTEGER,
@@ -68,7 +68,63 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "users",
+            "Blogs",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "title": {
+                    "type": Sequelize.STRING,
+                    "field": "title",
+                    "required": true
+                },
+                "description": {
+                    "type": Sequelize.TEXT,
+                    "field": "description",
+                    "required": true
+                },
+                "date": {
+                    "type": Sequelize.DATE,
+                    "field": "date",
+                    "required": true
+                },
+                "author": {
+                    "type": Sequelize.STRING,
+                    "field": "author",
+                    "required": true
+                },
+                "is_deleted": {
+                    "type": Sequelize.BOOLEAN,
+                    "field": "is_deleted",
+                    "default": false
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "foreignKey": true
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Users",
             {
                 "id": {
                     "type": Sequelize.INTEGER,
@@ -137,69 +193,6 @@ var migrationCommands = [{
                     "type": Sequelize.BOOLEAN,
                     "field": "is_deleted",
                     "default": false
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "blogs",
-            {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
-                },
-                "title": {
-                    "type": Sequelize.STRING,
-                    "field": "title",
-                    "required": true
-                },
-                "description": {
-                    "type": Sequelize.TEXT,
-                    "field": "description",
-                    "required": true
-                },
-                "date": {
-                    "type": Sequelize.DATE,
-                    "field": "date",
-                    "required": true
-                },
-                "author": {
-                    "type": Sequelize.STRING,
-                    "field": "author",
-                    "required": true
-                },
-                "is_deleted": {
-                    "type": Sequelize.BOOLEAN,
-                    "field": "is_deleted",
-                    "default": false
-                },
-                "user_id": {
-                    "type": Sequelize.INTEGER,
-                    "onUpdate": "CASCADE",
-                    "onDelete": "NO ACTION",
-                    "references": {
-                        "model": "users",
-                        "key": "id"
-                    },
-                    "allowNull": true,
-                    "field": "user_id",
-                    "foreignKey": true
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
