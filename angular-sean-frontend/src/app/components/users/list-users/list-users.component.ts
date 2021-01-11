@@ -5,7 +5,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { PageEvent } from '@angular/material/paginator';
 import { User } from '../../../shared/models/user.model';
-//import { UserService } from '../../../shared/services/user.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -45,6 +44,7 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.adminService.getUsers();
+    //this.adminService.getUser(this.userId);
     this.userId = this.authService.getUserId();
     this.usersSubs = this.adminService.getUserUpdateListener()
       .subscribe((userData: { users: User[], userCount: number }) => {
@@ -71,18 +71,10 @@ export class ListUsersComponent implements OnInit, OnDestroy {
     this.adminService.deleteUser(userId).subscribe(result => {
     });
   }
- /*  onDelete() {
-    this.isLoading = true;
-    // const userId = this.route.snapshot.paramMap.get('id');
-    // this.adminService.getUsers();
-    this.adminService.deleteUser(this.userId).subscribe(() => {
-      this.users = this.users.filter(user => user.id !== user.id);
-    });
-  } */
   sanatizeImageUrl(imagePath: string): SafeUrl {
     return this.sanatizer.bypassSecurityTrustUrl(imagePath);
   }
-  
+
   ngOnDestroy() {
     this.authStatusSubs.unsubscribe();
     this.usersSubs.unsubscribe();

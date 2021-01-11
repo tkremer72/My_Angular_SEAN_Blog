@@ -11,8 +11,7 @@
     </div>
     <p>{{ user.user_email}}</p>
     <mat-action-row>
-      <a mat-button color="black" [routerLink]="['/users-update', user.id]">View</a>
-
+<!--<a mat-button [routerLink]="['/admin-users-details', user.id]">VIEW</a>-->
       <button mat-button color="warn" (click)="onDelete(user.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>

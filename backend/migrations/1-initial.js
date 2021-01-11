@@ -13,8 +13,8 @@ var Sequelize = require('sequelize');
 
 var info = {
     "revision": 1,
-    "name": "initial-migration",
-    "created": "2021-01-02T20:49:09.033Z",
+    "name": "initial",
+    "created": "2021-01-11T14:13:57.781Z",
     "comment": ""
 };
 

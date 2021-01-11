@@ -7,7 +7,6 @@ import { BlogDetailsComponent } from './components/blogs/blog-details/blog-detai
 import { BlogListComponent } from './components/blogs/blog-list/blog-list.component';
 import { ListUsersComponent } from './components/users/list-users/list-users.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
-import { UserDetailsComponent } from './components/users/user-details/user-details.component';
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 
 const routes: Routes = [
@@ -16,8 +15,8 @@ const routes: Routes = [
   { path: 'users-login', component: UserLoginComponent },
   { path: 'users-profile', component: UserProfileComponent },
   { path: 'admin-users-list', component: ListUsersComponent },
-  { path: 'admin-users-details/:userId', component: UserDetailsComponent },
   { path: 'users-update/:userId', component: UpdateUserComponent },
+  { path: 'users-my-blogs/:userId', component: BlogListComponent },
   { path: 'users-new-blog', component: BlogCreateComponent },
   { path: 'users-blogs-list', component: BlogListComponent },
   { path: 'users-update-blog/:blogId', component: BlogCreateComponent },

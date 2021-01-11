@@ -1,6 +1,6 @@
 <mat-toolbar color="accent">
   <span>
-    <a routerLink="/users-my-blogs/:userId">My Blogs</a>
+    <a routerLink="/users-blogs-list">All Blogs</a>
   </span>
   <span class="spacer"></span>
   <ul>
@@ -9,16 +9,16 @@
         My Profile
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a *ngIf="userIsAuthenticated" mat-button routerLink="/users-blogs-list" routerLinkActive="mat-accent">
         All Blogs
       </a>
-    </li>
-    <li>
+    </li> -->
+    <!-- <li>
       <a *ngIf="userIsAuthenticated && isAdmin" mat-button routerLink="/admin-users-list" routerLinkActive="mat-accent">
         List Users
       </a>
-    </li>
+    </li> -->
     <li>
       <a *ngIf="userIsAuthenticated" mat-button routerLink="/users-new-blog" routerLinkActive="mat-accent">
         New Blog

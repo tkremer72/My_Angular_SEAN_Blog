@@ -76,17 +76,17 @@ exports.delete_user = async function (req, res, next) {
                     .then(user => {
                          if (user) {
                               let userId = req.params.id;
-                              models.Auth.update(
+                              models.Blog.update(
                                    { is_deleted: true },
-                                   { where: { id: userId } }
+                                   { where: { user_id: userId } }
                               )
                                    .then(models.User.update(
                                         { is_deleted: true },
                                         { where: { id: userId } }
                                    ))
-                                   .then(models.Blog.update(
+                                   .then(models.Auth.update(
                                         { is_deleted: true },
-                                        { where: { user_id: userId } }
+                                        { where: { id: userId } }
                                    ))
                                    .then(result => {
                                         res.status(200).json({
